@@ -1,0 +1,162 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "maths/v1/calculator_api.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "CalculatorAPI"
+    },
+    {
+      "name": "CounterAPI"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/maths/calculator:divide": {
+      "post": {
+        "summary": "DivideIntegers computes integer division result.",
+        "description": "Takes dividend and divisor in DivideIntegersRequest body and returns an integer",
+        "operationId": "CalculatorAPI_DivideIntegers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DivideIntegersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1DivideIntegersRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CalculatorAPI"
+        ]
+      }
+    },
+    "/v1/maths/counter": {
+      "post": {
+        "summary": "Increment increments the counter and returns the latest value.",
+        "operationId": "CounterAPI_Increment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1IncrementCounterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1IncrementCounterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CounterAPI"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1DivideIntegersRequest": {
+      "type": "object",
+      "properties": {
+        "dividend": {
+          "type": "string",
+          "format": "int64"
+        },
+        "divisor": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1DivideIntegersResponse": {
+      "type": "object",
+      "properties": {
+        "quotient": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1IncrementCounterRequest": {
+      "type": "object",
+      "properties": {
+        "step": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "v1IncrementCounterResponse": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    }
+  }
+}
