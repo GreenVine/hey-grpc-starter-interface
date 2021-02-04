@@ -1,12 +1,15 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "echo/v1/echo_api.proto",
+    "title": "maths/v1/calculator_api.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "EchoAPI"
+      "name": "CalculatorAPI"
+    },
+    {
+      "name": "CounterAPI"
     }
   ],
   "consumes": [
@@ -16,15 +19,16 @@
     "application/json"
   ],
   "paths": {
-    "/v1/echo/message": {
+    "/v1/maths/calculator:divide": {
       "post": {
-        "summary": "Send returns the message sent by the requester.",
-        "operationId": "EchoAPI_Send",
+        "summary": "DivideIntegers computes integer division result.",
+        "description": "Takes dividend and divisor in DivideIntegersRequest body and returns an integer",
+        "operationId": "CalculatorAPI_DivideIntegers",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1PingResponse"
+              "$ref": "#/definitions/v1DivideIntegersResponse"
             }
           },
           "default": {
@@ -40,33 +44,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1PingRequest"
+              "$ref": "#/definitions/v1DivideIntegersRequest"
             }
           }
         ],
         "tags": [
-          "EchoAPI"
+          "CalculatorAPI"
         ]
       }
     },
-    "/v1/echo/message:subscribe": {
+    "/v1/maths/counter": {
       "post": {
-        "summary": "Subscribe opens a stream and returns the Ping message and an Unix timestamp every second.",
-        "operationId": "EchoAPI_Subscribe",
+        "summary": "Increment increments the counter and returns the latest value.",
+        "operationId": "CounterAPI_Increment",
         "responses": {
           "200": {
-            "description": "A successful response.(streaming responses)",
+            "description": "A successful response.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "$ref": "#/definitions/v1PingResponse"
-                },
-                "error": {
-                  "$ref": "#/definitions/rpcStatus"
-                }
-              },
-              "title": "Stream result of v1PingResponse"
+              "$ref": "#/definitions/v1IncrementCounterResponse"
             }
           },
           "default": {
@@ -82,12 +77,12 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1PingRequest"
+              "$ref": "#/definitions/v1IncrementCounterRequest"
             }
           }
         ],
         "tags": [
-          "EchoAPI"
+          "CounterAPI"
         ]
       }
     }
@@ -123,23 +118,43 @@
         }
       }
     },
-    "v1PingRequest": {
+    "v1DivideIntegersRequest": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string"
+        "dividend": {
+          "type": "string",
+          "format": "int64"
+        },
+        "divisor": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
-    "v1PingResponse": {
+    "v1DivideIntegersResponse": {
       "type": "object",
       "properties": {
-        "message": {
-          "type": "string"
-        },
-        "timestamp": {
+        "quotient": {
           "type": "string",
           "format": "int64"
+        }
+      }
+    },
+    "v1IncrementCounterRequest": {
+      "type": "object",
+      "properties": {
+        "step": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "v1IncrementCounterResponse": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "format": "uint64"
         }
       }
     }
